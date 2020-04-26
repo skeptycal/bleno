@@ -2,33 +2,32 @@
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sandeepmistry/bleno?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-
 A Node.js module for implementing BLE (Bluetooth Low Energy) peripherals.
 
 Need a BLE central module? See [noble](https://github.com/sandeepmistry/noble).
 
-__Note:__ macOS / Mac OS X, Linux, FreeBSD and Windows are currently the only supported OSes.
+**Note:** macOS / Mac OS X, Linux, FreeBSD and Windows are currently the only supported OSes.
 
 ## Prerequisites
 
 ### OS X
 
- * install [Xcode](https://itunes.apple.com/ca/app/xcode/id497799835?mt=12)
- * 10.9 or later
+-   install [Xcode](https://itunes.apple.com/ca/app/xcode/id497799835?mt=12)
+-   10.9 or later
 
 ### Linux
 
- * Kernel version 3.6 or above
- * ```libbluetooth-dev```
- * ```bluetoothd``` disabled, if BlueZ 5.14 or later is installed. Use ```sudo hciconfig hci0 up``` to power Bluetooth adapter up after stopping or disabling ```bluetoothd```.
-    * ```System V```:
-      * ```sudo service bluetooth stop``` (once)
-      * ```sudo update-rc.d bluetooth remove``` (persist on reboot)
-    * ```systemd```
-      * ```sudo systemctl stop bluetooth``` (once)
-      * ```sudo systemctl disable bluetooth``` (persist on reboot)
+-   Kernel version 3.6 or above
+-   `libbluetooth-dev`
+-   `bluetoothd` disabled, if BlueZ 5.14 or later is installed. Use `sudo hciconfig hci0 up` to power Bluetooth adapter up after stopping or disabling `bluetoothd`.
+    -   `System V`:
+        -   `sudo service bluetooth stop` (once)
+        -   `sudo update-rc.d bluetooth remove` (persist on reboot)
+    -   `systemd`
+        -   `sudo systemctl stop bluetooth` (once)
+        -   `sudo systemctl disable bluetooth` (persist on reboot)
 
-If you're using [noble](https://github.com/sandeepmistry/noble) *and* bleno at the same time, connected BLE devices may not be able to retrieve a list of services from the BLE adaptor. Check out noble's [documentation on bleno compatibility](https://github.com/sandeepmistry/noble#bleno-compatibility)
+If you're using [noble](https://github.com/sandeepmistry/noble) _and_ bleno at the same time, connected BLE devices may not be able to retrieve a list of services from the BLE adaptor. Check out noble's [documentation on bleno compatibility](https://github.com/sandeepmistry/noble#bleno-compatibility)
 
 #### Ubuntu/Debian/Raspbian
 
@@ -36,9 +35,10 @@ If you're using [noble](https://github.com/sandeepmistry/noble) *and* bleno at t
 sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev
 ```
 
-Make sure ```node``` is on your path, if it's not, some options:
- * symlink ```nodejs``` to ```node```: ```sudo ln -s /usr/bin/nodejs /usr/bin/node```
- * [install Node.js using the NodeSource package](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
+Make sure `node` is on your path, if it's not, some options:
+
+-   symlink `nodejs` to `node`: `sudo ln -s /usr/bin/nodejs /usr/bin/node`
+-   [install Node.js using the NodeSource package](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 
 #### Fedora / Other-RPM based
 
@@ -58,24 +58,24 @@ Make sure you have GNU Make:
 sudo pkg install gmake
 ```
 
-Disable automatic loading of the default Bluetooth stack by putting [no-ubt.conf](https://gist.github.com/myfreeweb/44f4f3e791a057bc4f3619a166a03b87) into ```/usr/local/etc/devd/no-ubt.conf``` and restarting devd (```sudo service devd restart```).
+Disable automatic loading of the default Bluetooth stack by putting [no-ubt.conf](https://gist.github.com/myfreeweb/44f4f3e791a057bc4f3619a166a03b87) into `/usr/local/etc/devd/no-ubt.conf` and restarting devd (`sudo service devd restart`).
 
-Unload ```ng_ubt``` kernel module if already loaded:
+Unload `ng_ubt` kernel module if already loaded:
 
 ```sh
 sudo kldunload ng_ubt
 ```
 
-Make sure you have read and write permissions on the ```/dev/usb/*``` device that corresponds to your Bluetooth adapter.
+Make sure you have read and write permissions on the `/dev/usb/*` device that corresponds to your Bluetooth adapter.
 
 ### Windows
 
- * [node-gyp requirements for Windows](https://github.com/TooTallNate/node-gyp#installation)
-   * Python 2.7
-   * Visual Studio ([Express](https://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx))
- * [node-bluetooth-hci-socket prerequisites](https://github.com/sandeepmistry/node-bluetooth-hci-socket#windows)
-   * Compatible Bluetooth 4.0 USB adapter
-   * [WinUSB](https://msdn.microsoft.com/en-ca/library/windows/hardware/ff540196(v=vs.85).aspx) driver setup for Bluetooth 4.0 USB adapter, using [Zadig tool](http://zadig.akeo.ie/)
+-   [node-gyp requirements for Windows](https://github.com/TooTallNate/node-gyp#installation)
+    -   Python 2.7
+    -   Visual Studio ([Express](https://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx))
+-   [node-bluetooth-hci-socket prerequisites](https://github.com/sandeepmistry/node-bluetooth-hci-socket#windows)
+    -   Compatible Bluetooth 4.0 USB adapter
+    -   [WinUSB](<https://msdn.microsoft.com/en-ca/library/windows/hardware/ff540196(v=vs.85).aspx>) driver setup for Bluetooth 4.0 USB adapter, using [Zadig tool](http://zadig.akeo.ie/)
 
 ## Install
 
@@ -97,7 +97,7 @@ See [examples folder](https://github.com/sandeepmistry/bleno/blob/master/example
 
 ##### Start advertising
 
-NOTE: ```bleno.state``` must be ```poweredOn``` before advertising is started. ```bleno.on('stateChange', callback(state));``` can be used register for state change events.
+NOTE: `bleno.state` must be `poweredOn` before advertising is started. `bleno.on('stateChange', callback(state));` can be used register for state change events.
 
 ```javascript
 var name = 'name';
@@ -106,15 +106,14 @@ var serviceUuids = ['fffffffffffffffffffffffffffffff0']
 bleno.startAdvertising(name, serviceUuids[, callback(error)]);
 ```
 
- __Note:__: there are limits on the name and service UUID's
+**Note:**: there are limits on the name and service UUID's
 
-  * name
-    * maximum 26 bytes
-  * service UUID's
-    * 1 128-bit service UUID
-    * 1 128-bit service UUID + 2 16-bit service UUID's
-    * 7 16-bit service UUID
-
+-   name
+    -   maximum 26 bytes
+-   service UUID's
+    -   1 128-bit service UUID
+    -   1 128-bit service UUID + 2 16-bit service UUID's
+    -   7 16-bit service UUID
 
 ##### Start advertising iBeacon
 
@@ -127,11 +126,12 @@ var measuredPower = -59; // -128 - 127
 bleno.startAdvertisingIBeacon(uuid, major, minor, measuredPower[, callback(error)]);
 ```
 
- __Notes:__:
-  * OS X:
-    * in iBeacon mode your peripheral is non-connectable!
+**Notes:**:
 
-##### Start advertising with EIR data (__Linux only__)
+-   OS X:
+    -   in iBeacon mode your peripheral is non-connectable!
+
+##### Start advertising with EIR data (**Linux only**)
 
 ```javascript
 var scanData = new Buffer(...); // maximum 31 bytes
@@ -140,7 +140,7 @@ var advertisementData = new Buffer(...); // maximum 31 bytes
 bleno.startAdvertisingWithEIRData(advertisementData[, scanData, callback(error)]);
 ```
 
-  * For EIR format section [Bluetooth Core Specification](https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=229737) sections and 8 and 18 for more information the data format.
+-   For EIR format section [Bluetooth Core Specification](https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=229737) sections and 8 and 18 for more information the data format.
 
 ##### Stop advertising
 
@@ -181,7 +181,7 @@ var primaryService = new PrimaryService({
     uuid: 'fffffffffffffffffffffffffffffff0', // or 'fff0' for 16-bit
     characteristics: [
         // see Characteristic for data type
-    ]
+    ],
 });
 ```
 
@@ -209,21 +209,21 @@ var characteristic = new Characteristic({
 
 #### Result codes
 
-  * Characteristic.RESULT_SUCCESS
-  * Characteristic.RESULT_INVALID_OFFSET
-  * Characteristic.RESULT_INVALID_ATTRIBUTE_LENGTH
-  * Characteristic.RESULT_UNLIKELY_ERROR
+-   Characteristic.RESULT_SUCCESS
+-   Characteristic.RESULT_INVALID_OFFSET
+-   Characteristic.RESULT_INVALID_ATTRIBUTE_LENGTH
+-   Characteristic.RESULT_UNLIKELY_ERROR
 
 #### Read requests
 
 Can specify read request handler via constructor options or by extending Characteristic and overriding onReadRequest.
 
 Parameters to handler are
-  * ```offset``` (0x0000 - 0xffff)
-  * ```callback```
 
+-   `offset` (0x0000 - 0xffff)
+-   `callback`
 
-```callback``` must be called with result and data (of type ```Buffer```) - can be async.
+`callback` must be called with result and data (of type `Buffer`) - can be async.
 
 ```javascript
 var result = Characteristic.RESULT_SUCCESS;
@@ -237,12 +237,13 @@ callback(result, data);
 Can specify write request handler via constructor options or by extending Characteristic and overriding onWriteRequest.
 
 Parameters to handler are
-  * ```data``` (Buffer)
-  * ```offset``` (0x0000 - 0xffff)
-  * ```withoutResponse``` (true | false)
-  * ```callback```.
 
-```callback``` must be called with result code - can be async.
+-   `data` (Buffer)
+-   `offset` (0x0000 - 0xffff)
+-   `withoutResponse` (true | false)
+-   `callback`.
+
+`callback` must be called with result code - can be async.
 
 ```javascript
 var result = Characteristic.RESULT_SUCCESS;
@@ -255,8 +256,9 @@ callback(result);
 Can specify notify subscribe handler via constructor options or by extending Characteristic and overriding onSubscribe.
 
 Parameters to handler are
-  * ```maxValueSize``` (maximum data size)
-  * ```updateValueCallback``` (callback to call when value has changed)
+
+-   `maxValueSize` (maximum data size)
+-   `updateValueCallback` (callback to call when value has changed)
 
 #### Notify unsubscribe
 
@@ -264,7 +266,7 @@ Can specify notify unsubscribe handler via constructor options or by extending C
 
 #### Notify value changes
 
-Call the ```updateValueCallback``` callback (see Notify subscribe), with an argument of type ```Buffer```
+Call the `updateValueCallback` callback (see Notify subscribe), with an argument of type `Buffer`
 
 Can specify notify sent handler via constructor options or by extending Characteristic and overriding onNotify.
 
@@ -275,7 +277,7 @@ var Descriptor = bleno.Descriptor;
 
 var descriptor = new Descriptor({
     uuid: '2901',
-    value: 'value' // static value, must be of type Buffer or string if set
+    value: 'value', // static value, must be of type Buffer or string if set
 });
 ```
 
@@ -331,7 +333,7 @@ bleno.on('rssiUpdate', callback(rssi)); // not available on OS X 10.9
 
 ### Running on Linux
 
-__Note:__ Make sure you've also checked the [Linux Prerequisites](#linux)
+**Note:** Make sure you've also checked the [Linux Prerequisites](#linux)
 
 #### Running without root/sudo
 
@@ -341,18 +343,18 @@ Run the following command:
 sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
 ```
 
-This grants the ```node``` binary ```cap_net_raw``` privileges, so it can start/stop BLE advertising.
+This grants the `node` binary `cap_net_raw` privileges, so it can start/stop BLE advertising.
 
-__Note:__ The above command requires ```setcap``` to be installed, it can be installed using the following:
+**Note:** The above command requires `setcap` to be installed, it can be installed using the following:
 
- * apt: ```sudo apt-get install libcap2-bin```
- * yum: ```su -c \'yum install libcap2-bin\'```
+-   apt: `sudo apt-get install libcap2-bin`
+-   yum: `su -c \'yum install libcap2-bin\'`
 
 #### Multiple Adapters
 
-```hci0``` is used by default to override set the ```BLENO_HCI_DEVICE_ID``` environment variable to the interface number.
+`hci0` is used by default to override set the `BLENO_HCI_DEVICE_ID` environment variable to the interface number.
 
-Example, specify ```hci1```:
+Example, specify `hci1`:
 
 ```sh
 sudo BLENO_HCI_DEVICE_ID=1 node <your file>.js
@@ -360,9 +362,9 @@ sudo BLENO_HCI_DEVICE_ID=1 node <your file>.js
 
 #### Set custom device name
 
-By default bleno uses the hostname (```require('os').hostname()```) as the value for the device name (0x2a00) characterisic, to match the behaviour of OS X.
+By default bleno uses the hostname (`require('os').hostname()`) as the value for the device name (0x2a00) characterisic, to match the behaviour of OS X.
 
-A custom device name can be specified by setting the ```BLENO_DEVICE_NAME``` environment variable:
+A custom device name can be specified by setting the `BLENO_DEVICE_NAME` environment variable:
 
 ```sh
 sudo BLENO_DEVICE_NAME="custom device name" node <your file>.js
@@ -378,7 +380,7 @@ process.env['BLENO_DEVICE_NAME'] = 'custom device name';
 
 bleno uses a 100 ms advertising interval by default.
 
-A custom advertising interval can be specified by setting the ```BLENO_ADVERTISING_INTERVAL``` enviroment variable with the desired value in milliseconds:
+A custom advertising interval can be specified by setting the `BLENO_ADVERTISING_INTERVAL` enviroment variable with the desired value in milliseconds:
 
 ```sh
 sudo BLENO_ADVERTISING_INTERVAL=500 node <your file>.js
@@ -388,11 +390,10 @@ Advertising intervals must be between 20 ms to 10 s (10,000 ms).
 
 ## Useful tools/links
 
- * Tools
-   * LightBlue for [iOS](https://itunes.apple.com/us/app/lightblue/id557428110)/[OS X](https://itunes.apple.com/us/app/lightblue/id639944780)
-   * [nRF Master Control Panel (BLE)](https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp&hl=en) for Android
-   * [hcitool](http://linux.die.net/man/1/hcitool) and ```gatttool``` by [BlueZ](http://www.bluez.org) for Linux
-
+-   Tools
+    -   LightBlue for [iOS](https://itunes.apple.com/us/app/lightblue/id557428110)/[OS X](https://itunes.apple.com/us/app/lightblue/id639944780)
+    -   [nRF Master Control Panel (BLE)](https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp&hl=en) for Android
+    -   [hcitool](http://linux.die.net/man/1/hcitool) and `gatttool` by [BlueZ](http://www.bluez.org) for Linux
 
 ## License
 

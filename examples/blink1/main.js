@@ -11,22 +11,21 @@ var deviceInformationService = new DeviceInformationService(blink1);
 var blink1Service = new Blink1Service(blink1);
 
 bleno.on('stateChange', function(state) {
-  console.log('on -> stateChange: ' + state);
+    console.log('on -> stateChange: ' + state);
 
-  if (state === 'poweredOn') {
-    bleno.startAdvertising('blink1', [blink1Service.uuid]);
-  } else {
-    bleno.stopAdvertising();
-  }
+    if (state === 'poweredOn') {
+        bleno.startAdvertising('blink1', [blink1Service.uuid]);
+    } else {
+        bleno.stopAdvertising();
+    }
 });
 
 bleno.on('advertisingStart', function(error) {
-  console.log('on -> advertisingStart: ' + (error ? 'error ' + error : 'success'));
-  
-  if (!error) {
-    bleno.setServices([
-      deviceInformationService,
-      blink1Service
-    ]);
-  }
+    console.log(
+        'on -> advertisingStart: ' + (error ? 'error ' + error : 'success')
+    );
+
+    if (!error) {
+        bleno.setServices([deviceInformationService, blink1Service]);
+    }
 });

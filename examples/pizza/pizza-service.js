@@ -11,8 +11,8 @@ function PizzaService(pizza) {
         characteristics: [
             new PizzaCrustCharacteristic(pizza),
             new PizzaToppingsCharacteristic(pizza),
-            new PizzaBakeCharacteristic(pizza)
-        ]
+            new PizzaBakeCharacteristic(pizza),
+        ],
     });
 }
 
